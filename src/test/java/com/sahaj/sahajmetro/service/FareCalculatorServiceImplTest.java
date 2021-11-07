@@ -2,19 +2,14 @@ package com.sahaj.sahajmetro.service;
 
 import com.sahaj.sahajmetro.model.Trip;
 import com.sahaj.sahajmetro.model.Trip.CommuteStation;
-import com.sahaj.sahajmetro.model.Trip.CommuteTime;
-import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-import java.time.DayOfWeek;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.sahaj.sahajmetro.model.enums.Zone.ZONE_ONE;
 import static com.sahaj.sahajmetro.model.enums.Zone.ZONE_TWO;
-import static java.time.DayOfWeek.MONDAY;
 import static java.time.LocalDateTime.of;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,7 +32,7 @@ class FareCalculatorServiceImplTest {
                 of(2021, 11, 1, 18, 15), new CommuteStation(ZONE_TWO, ZONE_ONE));
 
         Trip trip5 = new Trip(
-                of(2021, 11, 1, 19, 00), new CommuteStation(ZONE_TWO, ZONE_ONE));
+                of(2021, 11, 1, 19, 0), new CommuteStation(ZONE_TWO, ZONE_ONE));
 
         BigDecimal fare = fareCalculatorService.calculate(new ArrayList<>(List.of(trip1, trip2, trip3, trip4, trip5)));
         assertEquals(new BigDecimal("120"), fare);
@@ -58,13 +53,13 @@ class FareCalculatorServiceImplTest {
                 of(2021, 11, 4, 18, 15), new CommuteStation(ZONE_TWO, ZONE_ONE));
 
         Trip trip5 = new Trip(
-                of(2021, 11, 5, 19, 00), new CommuteStation(ZONE_TWO, ZONE_ONE));
+                of(2021, 11, 5, 19, 0), new CommuteStation(ZONE_TWO, ZONE_ONE));
 
         Trip trip6 = new Trip(
-                of(2021, 11, 6, 19, 00), new CommuteStation(ZONE_TWO, ZONE_ONE));
+                of(2021, 11, 6, 19, 0), new CommuteStation(ZONE_TWO, ZONE_ONE));
 
         Trip trip7 = new Trip(
-                of(2021, 11, 7, 19, 00), new CommuteStation(ZONE_TWO, ZONE_ONE));
+                of(2021, 11, 7, 19, 0), new CommuteStation(ZONE_TWO, ZONE_ONE));
 
         BigDecimal fare = fareCalculatorService.calculate(new ArrayList<>(List.of(trip1, trip2, trip3, trip4, trip5, trip6, trip7)));
         assertEquals(new BigDecimal("235"), fare);
@@ -109,25 +104,25 @@ class FareCalculatorServiceImplTest {
                 of(2021, 11, 4, 18, 15), new CommuteStation(ZONE_TWO, ZONE_ONE));
 
         Trip trip5 = new Trip(
-                of(2021, 11, 5, 19, 00), new CommuteStation(ZONE_TWO, ZONE_ONE));
+                of(2021, 11, 5, 19, 0), new CommuteStation(ZONE_TWO, ZONE_ONE));
         Trip trip55 = new Trip(
-                of(2021, 11, 5, 19, 00), new CommuteStation(ZONE_TWO, ZONE_ONE));
+                of(2021, 11, 5, 19, 0), new CommuteStation(ZONE_TWO, ZONE_ONE));
         Trip trip555 = new Trip(
-                of(2021, 11, 5, 19, 00), new CommuteStation(ZONE_TWO, ZONE_ONE));
+                of(2021, 11, 5, 19, 0), new CommuteStation(ZONE_TWO, ZONE_ONE));
         Trip trip5555 = new Trip(
-                of(2021, 11, 5, 19, 00), new CommuteStation(ZONE_TWO, ZONE_ONE));
+                of(2021, 11, 5, 19, 0), new CommuteStation(ZONE_TWO, ZONE_ONE));
 
         Trip trip6 = new Trip(
-                of(2021, 11, 6, 19, 00), new CommuteStation(ZONE_TWO, ZONE_ONE));
+                of(2021, 11, 6, 19, 0), new CommuteStation(ZONE_TWO, ZONE_ONE));
         Trip trip66 = new Trip(
-                of(2021, 11, 6, 19, 00), new CommuteStation(ZONE_TWO, ZONE_ONE));
+                of(2021, 11, 6, 19, 0), new CommuteStation(ZONE_TWO, ZONE_ONE));
         Trip trip666 = new Trip(
-                of(2021, 11, 6, 19, 00), new CommuteStation(ZONE_TWO, ZONE_ONE));
+                of(2021, 11, 6, 19, 0), new CommuteStation(ZONE_TWO, ZONE_ONE));
         Trip trip6666 = new Trip(
-                of(2021, 11, 6, 19, 00), new CommuteStation(ZONE_TWO, ZONE_ONE));
+                of(2021, 11, 6, 19, 0), new CommuteStation(ZONE_TWO, ZONE_ONE));
 
         Trip trip7 = new Trip(
-                of(2021, 11, 7, 19, 00), new CommuteStation(ZONE_TWO, ZONE_ONE));
+                of(2021, 11, 7, 19, 0), new CommuteStation(ZONE_TWO, ZONE_ONE));
 
         BigDecimal fare = fareCalculatorService.calculate(
                 new ArrayList<>(List.of(
@@ -156,13 +151,13 @@ class FareCalculatorServiceImplTest {
                 of(2021, 11, 11, 18, 15), new CommuteStation(ZONE_TWO, ZONE_ONE));
 
         Trip trip5 = new Trip(
-                of(2021, 11, 25, 19, 00), new CommuteStation(ZONE_TWO, ZONE_ONE));
+                of(2021, 11, 25, 19, 0), new CommuteStation(ZONE_TWO, ZONE_ONE));
 
         Trip trip6 = new Trip(
-                of(2021, 11, 26, 19, 00), new CommuteStation(ZONE_TWO, ZONE_ONE));
+                of(2021, 11, 26, 19, 0), new CommuteStation(ZONE_TWO, ZONE_ONE));
 
         Trip trip7 = new Trip(
-                of(2021, 11, 27, 19, 00), new CommuteStation(ZONE_TWO, ZONE_ONE));
+                of(2021, 11, 27, 19, 0), new CommuteStation(ZONE_TWO, ZONE_ONE));
 
         BigDecimal fare = fareCalculatorService.calculate(new ArrayList<>(List.of(trip1, trip2, trip3, trip4, trip5, trip6, trip7)));
         assertEquals(new BigDecimal("235"), fare);
@@ -173,13 +168,13 @@ class FareCalculatorServiceImplTest {
         List<Trip> monthlyTripData = new ArrayList<>();
         for(int i = 1; i < 31; i++) {
             Trip trip1 = new Trip(
-                    of(2021, 11, i, 10, 00), new CommuteStation(ZONE_ONE, ZONE_ONE));
+                    of(2021, 11, i, 10, 0), new CommuteStation(ZONE_ONE, ZONE_ONE));
             Trip trip2 = new Trip(
-                    of(2021, 11, i, 10, 00), new CommuteStation(ZONE_ONE, ZONE_ONE));
+                    of(2021, 11, i, 10, 0), new CommuteStation(ZONE_ONE, ZONE_ONE));
             Trip trip3 = new Trip(
-                    of(2021, 11, i, 10, 00), new CommuteStation(ZONE_ONE, ZONE_ONE));
+                    of(2021, 11, i, 10, 0), new CommuteStation(ZONE_ONE, ZONE_ONE));
             Trip trip4 = new Trip(
-                    of(2021, 11, i, 10, 00), new CommuteStation(ZONE_ONE, ZONE_ONE));
+                    of(2021, 11, i, 10, 0), new CommuteStation(ZONE_ONE, ZONE_ONE));
 
             monthlyTripData.add(trip1);
             monthlyTripData.add(trip2);

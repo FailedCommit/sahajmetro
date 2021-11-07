@@ -1,18 +1,14 @@
 package com.sahaj.sahajmetro.service;
 
 import com.sahaj.sahajmetro.model.Trip;
+import com.sahaj.sahajmetro.util.MetroUtils;
 import com.sahaj.sahajmetro.util.TripsComparator;
 
 import java.math.BigDecimal;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.temporal.ChronoField;
-import java.time.temporal.WeekFields;
 import java.util.*;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-import static java.time.LocalDateTime.of;
 import static java.util.Objects.isNull;
 
 public class FareCalculatorServiceImpl implements FareCalculatorService {
@@ -36,16 +32,16 @@ public class FareCalculatorServiceImpl implements FareCalculatorService {
         for(int weekNumber : tripsByWeek.keySet()) {
             BigDecimal weeklyFare = BigDecimal.ZERO;
             Map<LocalDate, List<Trip>> tripsByDate = tripsByWeek.get(weekNumber);
-            List<Trip> weeklyTrips = tripsByDate.values().stream().flatMap(Collection::stream).collect(Collectors.toList());
-            weeklyTrips.sort(new TripsComparator());
+            List<Trip> weeklyTrips = tripsByDate.values().stream()
+                    .flatMap(Collection::stream)
+                    .sorted(new TripsComparator())
+                    .collect(Collectors.toList());
             BigDecimal weeklyCap = fareCappingService.getWeeklyCapAmount(weeklyTrips);
             final Set<LocalDate> localDates = new TreeSet<>(tripsByDate.keySet());
             for(LocalDate date : localDates) {
                 BigDecimal dailyFare = calculateTripFaresByDate(tripsByDate.get(date));
-                if(isFreePassEnabled(dailyFare, weeklyCap)) {
-                    weeklyFare.add(BigDecimal.ZERO);
-                } else {
-                    if(weeklyCap.compareTo(weeklyFare.add(dailyFare)) > 0) {
+                if (freePassNotEnabled(dailyFare, weeklyCap)) {
+                    if (weeklyCap.compareTo(weeklyFare.add(dailyFare)) > 0) {
                         weeklyFare = weeklyFare.add(dailyFare);
                     } else {
                         weeklyFare = weeklyCap;
@@ -62,11 +58,9 @@ public class FareCalculatorServiceImpl implements FareCalculatorService {
         BigDecimal totalFare = BigDecimal.ZERO;
         BigDecimal dailyCap = fareCappingService.getDailyCapAmount(trips);
         for(Trip trip : trips) {
-            if(isFreePassEnabled(dailyFare, dailyCap)) {
-                dailyFare.add(BigDecimal.ZERO);
-            } else {
+            if (freePassNotEnabled(dailyFare, dailyCap)) {
                 final BigDecimal tripRate = rateService.tripRate(trip);
-                if(dailyCap.compareTo(dailyFare.add(tripRate)) > 0) {
+                if (dailyCap.compareTo(dailyFare.add(tripRate)) > 0) {
                     dailyFare = dailyFare.add(tripRate);
                 } else {
                     dailyFare = dailyCap;
@@ -83,7 +77,7 @@ public class FareCalculatorServiceImpl implements FareCalculatorService {
     private Map<Integer, Map<LocalDate, List<Trip>>> tripsByWeek(Map<LocalDate, List<Trip>> tripsByDate) {
         Map<Integer, Map<LocalDate, List<Trip>>> tripsByWeek = new TreeMap<>();
         for(LocalDate date : tripsByDate.keySet()) {
-            final int weekNumberOfTheYear = date.get(WeekFields.of(Locale.FRANCE).weekOfYear());
+            final int weekNumberOfTheYear = MetroUtils.getWeekNumber(date);
             List<Trip> trips = tripsByDate.get(date);
             Map<LocalDate, List<Trip>> localDateListMap = new HashMap<>();
             if(tripsByWeek.containsKey(weekNumberOfTheYear)) {
@@ -97,5 +91,9 @@ public class FareCalculatorServiceImpl implements FareCalculatorService {
 
     private boolean isFreePassEnabled(BigDecimal totalFare, BigDecimal cap) {
         return totalFare.compareTo(cap) >= 0;
+    }
+
+    private boolean freePassNotEnabled(BigDecimal totalFare, BigDecimal cap) {
+        return !isFreePassEnabled(totalFare, cap);
     }
 }

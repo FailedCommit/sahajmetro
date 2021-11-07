@@ -27,5 +27,12 @@
    1. testGetCapAmount_crossZone
    2. testGetCapAmount_ZoneOneToOne
    3. testGetCapAmount_ZoneTwoToTwo
-
-
+   
+4. MetroUtilsTest
+   1. testGetWeekNumber
+   
+5. TripValidatorTest
+   1. testValidateDailyTrips_sucess
+   2. testValidateDailyTrips_fail
+   3. testValidateWeeklyTrips_success
+   4. testValidateWeeklyTrips_fail

@@ -5,10 +5,9 @@ import com.sahaj.sahajmetro.model.Trip.CommuteStation;
 import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.time.LocalDate;
+import java.time.temporal.WeekFields;
+import java.util.*;
 
 import static com.sahaj.sahajmetro.model.enums.Zone.ZONE_ONE;
 import static com.sahaj.sahajmetro.model.enums.Zone.ZONE_TWO;
@@ -28,4 +27,8 @@ public class MetroUtils {
             new CommuteStation(ZONE_ONE, ZONE_TWO), new BigDecimal("600"),
             new CommuteStation(ZONE_TWO, ZONE_ONE), new BigDecimal("600")
     );
+
+    public static int getWeekNumber(LocalDate date) {
+        return date.get(WeekFields.of(Locale.FRANCE).weekOfYear());
+    }
 }
